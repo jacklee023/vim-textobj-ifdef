@@ -16,9 +16,9 @@ endfunction
 function! s:select(inner)
     let c = v:count1
 
-    let p = ['^\s*#\s*ifn\?\%[def]\>', '', '^\s*#\s*endif\>']
+    let p = ['^\s*'.b:textobj_ifdef_flag.'\s*ifn\?\%[def]\>', '', '^\s*'.b:textobj_ifdef_flag.'\s*endif\>']
     if a:inner
-        let p[1] = '^\s*#\s*el\(if\|se\)\>'
+        let p[1] = '^\s*'.b:textobj_ifdef_flag.'\s*el\(if\|se\|sif\)\>'
     endif
 
     if getline('.') =~# p[2]
@@ -47,12 +47,12 @@ function! s:select(inner)
 endfunction
 
 function! textobj#ifdef#surround_input()
-    let macro = input('#if ')
+    let macro = input(b:textobj_ifdef_flag . 'if ')
     if macro == ''
         return []
     elseif macro =~# '\v^!?\s*[A-Za-z_][0-9A-Za-z_]*$'
-	let macro = (macro =~# '^!' ? 'n' : '') . 'def ' .
-	\           matchstr(macro, '[A-Za-z_][0-9A-Za-z_]*$')
+    let macro = (macro =~# '^!' ? 'n' : '') . 'def ' .
+    \           matchstr(macro, '[A-Za-z_][0-9A-Za-z_]*$')
     else
         let macro = ' ' . macro
     endif

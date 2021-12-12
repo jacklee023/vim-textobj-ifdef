@@ -7,6 +7,8 @@ if exists("g:loaded_textobj_ifdef")
 endif
 let g:loaded_textobj_ifdef = 1
 
+let b:textobj_ifdef_flag = '#'
+
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -21,11 +23,11 @@ call textobj#user#plugin('ifdef', {
 
 let s:surround_objects = {
 \   "#": {
-\       'left': "\n#if\1\n", 'right': "\n#endif\n", 'nspaces': 0, 'reindent': 0,
+\       'left': "\n". b:textobj_ifdef_flag ."if\1\n", 'right': "\n". b:textobj_ifdef_flag ."endif\n", 'nspaces': 0, 'reindent': 0,
 \       'inputfunc': 'textobj#ifdef#surround_input'
 \   },
 \   "3": {
-\       'left': "\n#if\1\n", 'right': "\n#endif\n", 'nspaces': 0, 'reindent': 0,
+\       'left': "\n". b:textobj_ifdef_flag ."if\1\n", 'right': "\n". b:textobj_ifdef_flag ."endif\n", 'nspaces': 0, 'reindent': 0,
 \       'inputfunc': 'textobj#ifdef#surround_input'
 \   },
 \}
